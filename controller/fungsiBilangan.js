@@ -6,22 +6,36 @@ const jumlahAnggota = (req, res) => {
 
 const anggotaTekecil = (req, res) => {
     const arr = req.body.data
-    const min = Math.min(...arr);
+    let min = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
+    }
     res.status(200).json({anggotaTekecil : min})
 }
 
 const anggotaTerbesar = (req, res) => {
     const arr = req.body.data
-    const max = Math.max(...arr);
+    let max = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
     res.status(200).json({anggotaTerbesar : max})
 }
 
 const cariAnggota = (req, res) => {
     const arr = req.body.data
     const nilaiInput = req.body.nilaiInput
-    const newArray = arr.find(el => el == nilaiInput && el > 1)
-    if(!newArray){
-        return res.status(404).json({message : "Data Tidak Ditemuakn"})
+    const newArray = []
+
+    for (let index = 0; index < arr.length; index++) {
+        const element = arr[index];
+        if(element == nilaiInput && nilaiInput > 1){
+            newArray.push(element)
+        }
     }
     res.status(200).json({data : newArray})
 }
